@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+import os
+import xml.etree.ElementTree as ET
+
+# Define the path to the XML file
+XML_FILE_PATH = "metadata.xml"
+
+def save_to_xml(kaynak_id, kaynak_adi, kaynak_detay, kaynak_url, kaynak_zaman):
+    # Check if the file exists
+    if os.path.exists(XML_FILE_PATH):
+        # Parse the existing XML file
+        tree = ET.parse(XML_FILE_PATH)
+        root = tree.getroot()
+    else:
+        # Create a new root element
+        root = ET.Element("metadata")
+
+    # Create a new child element for the resource
+    kaynak = ET.SubElement(root, "kaynak")
+    ET.SubElement(kaynak, "kaynakID").text = kaynak_id
+    ET.SubElement(kaynak, "kaynakAdi").text = kaynak_adi
+    ET.SubElement(kaynak, "kaynakDetay").text = kaynak_detay
+    ET.SubElement(kaynak, "kaynakURL").text = kaynak_url
+    ET.SubElement(kaynak, "kaynakZamanDamgasi").text = kaynak_zaman
+
+    # Write the updated tree back to the file
+    tree = ET.ElementTree(root)
+    with open(XML_FILE_PATH, "wb") as xml_file:
+        tree.write(xml_file, encoding="utf-8", xml_declaration=True)

@@ -1,0 +1,9 @@
+import datetime
+
+def save_report_to_txt(report_data):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"report_{timestamp}.txt"
+    
+    with open(filename, "w", encoding="utf-8") as file:
+        for entry in report_data:
+            file.write(f"{entry['kaynakID']} - {entry['KaynakURL']} - {entry['status']}\n")
